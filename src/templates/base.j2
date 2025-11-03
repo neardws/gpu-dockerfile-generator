@@ -1,0 +1,21 @@
+{# Base Dockerfile Template #}
+{% include 'components/nvidia_base.j2' %}
+
+{% include 'components/system_packages.j2' %}
+
+{% include 'components/python_setup.j2' %}
+
+{% include 'components/ssh_setup.j2' %}
+
+{% include 'components/proxy_setup.j2' %}
+
+{% include 'components/conda_setup.j2' %}
+
+{% include 'components/github_cli.j2' %}
+
+{% if config.custom_commands %}
+{# Custom Commands #}
+{% for command in config.custom_commands %}
+RUN {{ command }}
+{% endfor %}
+{% endif %}

@@ -1,0 +1,67 @@
+# Example Configuration: Basic GPU Server
+# This is a minimal configuration for a GPU server with PyTorch
+
+metadata:
+  version: v1.0
+  maintainer: Your Name
+  author: Your Name
+  vendor: null
+
+base_image:
+  registry: nvcr.io/nvidia
+  image: pytorch
+  tag: 24.02-py3
+
+system:
+  ubuntu_version: null
+  timezone: Asia/Chongqing
+  locale: C.UTF-8
+  apt_mirror: https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+  system_packages:
+    - git
+    - curl
+    - wget
+    - vim
+    - software-properties-common
+    - libgl1-mesa-glx
+    - libsm6
+    - libxrender1
+    - libxext-dev
+    - ffmpeg
+
+python:
+  version: null
+  pip_version: latest
+  pip_mirror: https://pypi.tuna.tsinghua.edu.cn/simple
+  use_uv: false
+  uv_version: latest
+
+conda:
+  enabled: true
+  version: 2024.06-1
+  install_path: /root/anaconda
+  channels:
+    - conda-forge
+
+ml_framework:
+  pytorch_version: null
+  tensorflow_version: null
+  cuda_version: null
+  cudnn_version: null
+  additional_packages: []
+
+proxy:
+  enabled: false
+  clash_subscribe_link: null
+  clash_secret: '123456'
+  clash_repo: https://github.com/Elegycloud/clash-for-linux-backup.git
+
+ssh:
+  enabled: true
+  create_ssh_dir: true
+
+github_cli:
+  enabled: true
+
+working_dir: /code
+custom_commands: []

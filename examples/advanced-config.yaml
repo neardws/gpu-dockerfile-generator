@@ -1,0 +1,72 @@
+# Example Configuration: Advanced GPU Server with Proxy
+# This configuration matches your original Dockerfile example
+
+metadata:
+  version: v5.3
+  maintainer: Haowen He
+  author: Haowen He
+  vendor: dig.sias.uestc.cn
+
+base_image:
+  registry: nvcr.io/nvidia
+  image: pytorch
+  tag: 24.02-py3
+
+system:
+  ubuntu_version: null
+  timezone: Asia/Chongqing
+  locale: C.UTF-8
+  apt_mirror: https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+  system_packages:
+    - git
+    - libsndfile1-dev
+    - tesseract-ocr
+    - espeak-ng
+    - python3
+    - python3-pip
+    - ffmpeg
+    - curl
+    - wget
+    - vim
+    - software-properties-common
+    - libgl1-mesa-glx
+    - libsm6
+    - libxrender1
+    - libxext-dev
+
+python:
+  version: null
+  pip_version: latest
+  pip_mirror: https://pypi.tuna.tsinghua.edu.cn/simple
+  use_uv: false
+  uv_version: latest
+
+conda:
+  enabled: true
+  version: 2024.06-1
+  install_path: /root/anaconda
+  channels:
+    - conda-forge
+
+ml_framework:
+  pytorch_version: null
+  tensorflow_version: null
+  cuda_version: null
+  cudnn_version: null
+  additional_packages: []
+
+proxy:
+  enabled: true
+  clash_subscribe_link: REPLACE_WITH_YOUR_CLASH_LINK
+  clash_secret: '123456'
+  clash_repo: https://github.com/Elegycloud/clash-for-linux-backup.git
+
+ssh:
+  enabled: true
+  create_ssh_dir: true
+
+github_cli:
+  enabled: true
+
+working_dir: /code
+custom_commands: []

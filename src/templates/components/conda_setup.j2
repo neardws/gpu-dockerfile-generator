@@ -1,0 +1,8 @@
+{# Conda Installation and Setup #}
+{% if config.conda.enabled %}
+RUN wget https://repo.anaconda.com/archive/Anaconda3-{{ config.conda.version }}-Linux-x86_64.sh && bash Anaconda3-{{ config.conda.version }}-Linux-x86_64.sh -b -p {{ config.conda.install_path }}
+ENV PATH={{ config.conda.install_path }}/bin:$PATH
+RUN conda config {% for channel in config.conda.channels %}--add channels {{ channel }} {% endfor %}\
+    && conda update -y conda \
+    && conda init
+{% endif %}

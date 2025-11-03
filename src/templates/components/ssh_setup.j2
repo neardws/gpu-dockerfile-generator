@@ -1,0 +1,4 @@
+{# SSH Configuration #}
+{% if config.ssh.enabled and config.ssh.create_ssh_dir %}
+RUN mkdir /root/.ssh
+{% endif %}

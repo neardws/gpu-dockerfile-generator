@@ -1,0 +1,21 @@
+{# Proxy Setup (Clash) #}
+{% if config.proxy.enabled %}
+ARG CLASH_SUBSCIBE_LINK={{ config.proxy.clash_subscribe_link or 'EMPTY' }}
+
+RUN cd {{ config.working_dir }} \
+    && git clone {{ config.proxy.clash_repo }} \
+    && cd clash-for-linux-backup \
+    && echo "export CLASH_URL='$CLASH_SUBSCIBE_LINK' \n export CLASH_SECRET='{{ config.proxy.clash_secret }}'" > .env
+
+RUN cat << 'EOF' >> ~/.bashrc
+# proxy test
+if netstat -tln | grep -E '9090|789.' > /dev/null ; then
+    echo "Clash可能已经启动"
+    source /etc/profile.d/clash.sh && proxy_on
+else
+    echo "Clash可能未启动"
+    bash /data/software/clash-for-linux-backup/start.sh && source /etc/profile.d/clash.sh && proxy_on
+fi
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$NX_SESSION_ID" ]; then export $(cat /proc/1/environ |tr '\0' '\n' | xargs); fi
+EOF
+{% endif %}

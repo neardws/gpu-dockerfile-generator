@@ -1,0 +1,14 @@
+{# NVIDIA Base Image Component #}
+FROM {{ config.base_image.full_image }}
+ARG DOCKERFILE_VERSION={{ config.metadata.version }}
+
+MAINTAINER {{ config.metadata.maintainer }}
+LABEL version=$DOCKERFILE_VERSION
+
+LABEL org.opencontainers.image.version=$DOCKERFILE_VERSION
+LABEL org.opencontainers.image.authors="{{ config.metadata.author }}"
+{% if config.metadata.vendor %}
+LABEL org.opencontainers.image.vendor="{{ config.metadata.vendor }}"
+{% endif %}
+
+ENV LANG={{ config.system.locale }}

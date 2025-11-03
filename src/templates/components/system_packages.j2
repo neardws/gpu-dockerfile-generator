@@ -1,0 +1,17 @@
+{# System Packages Installation #}
+RUN <<END
+apt update
+apt install -y {{ config.system.system_packages | join(' ') }}
+{% if config.python.version %}
+apt install -y python{{ config.python.version }} python{{ config.python.version }}-pip
+{% endif %}
+python3 -m pip install --no-cache-dir --upgrade pip
+export LANG={{ config.system.locale }}
+END
+
+{% if config.python.pip_version and config.python.pip_version != 'latest' %}
+RUN mkdir -p /root/downloads \
+    && cd /root/downloads \
+    && wget https://bootstrap.pypa.io/get-pip.py \
+    && python get-pip.py
+{% endif %}

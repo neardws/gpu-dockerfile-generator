@@ -1,0 +1,29 @@
+{# Python and Package Manager Setup #}
+RUN mkdir -p {{ config.working_dir }} && yes | pip uninstall transformer_engine && yes | pip uninstall flash_attn
+
+{# Timezone Configuration #}
+RUN echo 'tzdata tzdata/Areas select {{ config.system.timezone.split("/")[0] }}' | debconf-set-selections \
+    && echo 'tzdata tzdata/Zones/{{ config.system.timezone.split("/")[0] }} select {{ config.system.timezone.split("/")[1] }}' | debconf-set-selections \
+    && DEBIAN_FRONTEND="noninteractive" apt install -y tzdata
+
+WORKDIR {{ config.working_dir }}
+
+{# Configure PyPI Mirror #}
+RUN <<END
+pip config set global.index-url {{ config.python.pip_mirror }}
+{% if config.system.apt_mirror %}
+echo '''
+deb {{ config.system.apt_mirror }} focal main restricted universe multiverse
+deb {{ config.system.apt_mirror }} focal-updates main restricted universe multiverse
+deb {{ config.system.apt_mirror }} focal-backports main restricted universe multiverse
+
+deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
+''' >/etc/apt/sources.list
+{% endif %}
+END
+
+{% if config.python.use_uv %}
+{# Install UV Package Manager #}
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.cargo/bin:$PATH"
+{% endif %}

@@ -1,0 +1,71 @@
+# Example Configuration: TensorFlow GPU Server
+# Configuration optimized for TensorFlow workloads
+
+metadata:
+  version: v1.0
+  maintainer: Your Name
+  author: Your Name
+  vendor: null
+
+base_image:
+  registry: nvcr.io/nvidia
+  image: tensorflow
+  tag: 24.01-tf2-py3
+
+system:
+  ubuntu_version: null
+  timezone: Asia/Shanghai
+  locale: C.UTF-8
+  apt_mirror: https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+  system_packages:
+    - git
+    - curl
+    - wget
+    - vim
+    - htop
+    - tmux
+    - libgl1-mesa-glx
+
+python:
+  version: null
+  pip_version: latest
+  pip_mirror: https://pypi.tuna.tsinghua.edu.cn/simple
+  use_uv: true
+  uv_version: latest
+
+conda:
+  enabled: false
+  version: 2024.06-1
+  install_path: /root/anaconda
+  channels:
+    - conda-forge
+
+ml_framework:
+  pytorch_version: null
+  tensorflow_version: 2.15.0
+  cuda_version: 12.3
+  cudnn_version: null
+  additional_packages:
+    - numpy
+    - pandas
+    - scikit-learn
+    - jupyter
+    - matplotlib
+
+proxy:
+  enabled: false
+  clash_subscribe_link: null
+  clash_secret: '123456'
+  clash_repo: https://github.com/Elegycloud/clash-for-linux-backup.git
+
+ssh:
+  enabled: true
+  create_ssh_dir: true
+
+github_cli:
+  enabled: true
+
+working_dir: /workspace
+custom_commands:
+  - pip install tensorboard
+  - pip install tf-keras

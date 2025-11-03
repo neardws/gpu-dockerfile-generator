@@ -27,6 +27,12 @@ pip install git+https://github.com/neardws/gpu-dockerfile-generator.git
 uv pip install git+https://github.com/neardws/gpu-dockerfile-generator.git
 ```
 
+**Note**: If you have a custom PyPI mirror configured (like Tsinghua mirror), you may need to temporarily use the official PyPI:
+
+```bash
+UV_DEFAULT_INDEX=https://pypi.org/simple uv pip install git+https://github.com/neardws/gpu-dockerfile-generator.git
+```
+
 ### From source
 
 ```bash
@@ -34,6 +40,8 @@ git clone https://github.com/neardws/gpu-dockerfile-generator.git
 cd gpu-dockerfile-generator
 pip install -e .
 ```
+
+For detailed installation instructions and troubleshooting, see [INSTALL.md](INSTALL.md).
 
 ## Quick Start
 
